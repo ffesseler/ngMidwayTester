@@ -17,6 +17,7 @@
   options = options || {};
   var doc = options.document || document;
   var wind = options.window || window;
+  var additionalModules = options.additionalModules || [];
   var noop = angular.noop;
 
   var mockLocationPaths = options.mockLocationPaths == null ? true : !!options.mockLocationPaths;
@@ -75,7 +76,7 @@
   $terminalElement = angular.element('<div status="{{__view_status}}"></div>');
   $rootElement.append($terminalElement);
 
-  var $injector = angular.bootstrap($rootElement, ['ng','ngMidway',moduleName]);
+  var $injector = angular.bootstrap($rootElement, ['ng','ngMidway',moduleName].concat(additionalModules));
   var $rootModule = angular.module(moduleName);
   angular.element(doc.body).append($rootElement);
 

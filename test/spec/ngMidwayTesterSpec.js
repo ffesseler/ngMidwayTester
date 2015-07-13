@@ -22,6 +22,22 @@ describe('ngMidwayTester', function() {
     expect(tester.rootScope().value).to.equal('true');
   });
 
+  it('should register multiple modules', function() {
+    var example = angular.module(appName, [])
+      .run(function($rootScope) {
+        $rootScope.value = 'true';
+      });
+
+      var otherModule = angular.module('otherModule', []).run(function ($rootScope) {
+        $rootScope.otherValue = 'otherValue';
+      });
+
+    tester = ngMidwayTester(appName, { additionalModules: ['otherModule'] });
+    expect(tester.module()).to.equal(example);
+    expect(tester.rootScope().value).to.equal('true');
+    expect(tester.rootScope().otherValue).to.equal('otherValue');
+  });
+
   it('should inject services', function() {
     var $location, $window, $compile, $injector;
     var example = angular.module(appName, [])
